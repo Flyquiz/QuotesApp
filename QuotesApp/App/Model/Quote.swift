@@ -7,8 +7,10 @@
 
 import Foundation
 
+typealias QuoteQuery = [Quote]
+
 struct Quote: Decodable {
     let quote: String
     let author: String
-    let category: Category
+    let category: String
 }

@@ -26,7 +26,7 @@ final class NetworkManager {
         let url = URL(string: "https://api.api-ninjas.com/v1/quotes?category=" + categoryStr)!
         
         var request = URLRequest(url: url)
-//        request.setValue(<#T##value: String?##String?#>, forHTTPHeaderField: <#T##String#>)
+        request.setValue("aROkTQMopz1ALuGQdAFe0A==9WzaaKvKn3blHhtS", forHTTPHeaderField: "X-Api-Key")
         
         URLSession.shared.dataTask(with: request) { data, response, error in
             guard let data, let response = response as? HTTPURLResponse else {
@@ -38,9 +38,9 @@ final class NetworkManager {
             switch response.statusCode {
             case 200...299:
                 do {
-                    let quote = try self.decoder.decode(Quote.self, from: data)
+                    let query = try self.decoder.decode(QuoteQuery.self, from: data)
                     DispatchQueue.main.async {
-                        completion(.success(quote))
+                        completion(.success(query[0]))
                     }
                 } catch {
                     sendError(error: .decodingError)

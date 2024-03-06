@@ -9,6 +9,8 @@ import UIKit
 
 final class ViewController: UIViewController {
     
+    private let networkManager = NetworkManager.shared
+    
     private var tableModel: [Category] = []
     
 //    private lazy var searchController: UISearchController = {
@@ -94,7 +96,16 @@ extension ViewController: UITableViewDataSource {
 
 extension ViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+        let category = tableModel[indexPath.row]
+        networkManager.fetchQuotes(for: category) { [weak self] result in
+            switch result {
+            case .success(let quote):
+                let detailVC = DetailViewController(quote: quote)
+                self?.navigationController?.pushViewController(detailVC, animated: true)
+            case .failure(let error):
+                print(error.title)
+            }
+        }
     }
 }
 
