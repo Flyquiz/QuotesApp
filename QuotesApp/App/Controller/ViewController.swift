@@ -9,17 +9,27 @@ import UIKit
 
 final class ViewController: UIViewController {
     
-    private let tableModel: [Category] = Category.makeModel()
+    private var tableModel: [Category] = []
     
-    private lazy var searchController: UISearchController = {
-        let searchVC = UISearchController()
-        searchVC.delegate = self
-        searchVC.searchBar.placeholder = "Get random quote from category bellow"
-        return searchVC
+//    private lazy var searchController: UISearchController = {
+//        let searchVC = UISearchController()
+//        searchVC.delegate = self
+//        searchVC.searchBar.placeholder = "Get random quote from category bellow"
+//        return searchVC
+//    }()
+    
+    private let mainLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "Select a random category below and we will give you a random quote"
+        label.font = .systemFont(ofSize: 20, weight: .semibold)
+        label.numberOfLines = 2
+        label.textAlignment = .center
+        return label
     }()
     
     private lazy var tableView: UITableView = {
-        let tableView = UITableView(frame: .zero, style: .grouped)
+        let tableView = UITableView(frame: .zero, style: .insetGrouped)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.dataSource = self
         tableView.delegate = self
@@ -29,6 +39,7 @@ final class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableModel = Category.makeModel()
         setup()
     }
 
@@ -36,15 +47,21 @@ final class ViewController: UIViewController {
     private func setup() {
         navigationItem.title = "QuotesApp"
         view.backgroundColor = .systemGray6
-        navigationItem.searchController = searchController
-        navigationItem.hidesSearchBarWhenScrolling = false
+//        navigationItem.searchController = searchController
+//        navigationItem.hidesSearchBarWhenScrolling = false
         view.addSubview(tableView)
+        view.addSubview(mainLabel)
         
+        let inset: CGFloat = 10
         NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            tableView.topAnchor.constraint(equalTo: mainLabel.bottomAnchor, constant: inset),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            
+            mainLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            mainLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: inset),
+            mainLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -inset)
         ])
     }
 
@@ -70,19 +87,21 @@ extension ViewController: UITableViewDataSource {
         content.textProperties.color = .black
         cell.contentConfiguration = content
         
-        cell.isUserInteractionEnabled = false
+//        cell.isUserInteractionEnabled = false
         return cell
     }
 }
 
 extension ViewController: UITableViewDelegate {
-    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+    }
 }
 
 
 
-//MARK: - Search delegates
-
-extension ViewController: UISearchControllerDelegate, UISearchBarDelegate {
-    
-}
+////MARK: - Search delegates
+//
+//extension ViewController: UISearchControllerDelegate, UISearchBarDelegate {
+//    
+//}

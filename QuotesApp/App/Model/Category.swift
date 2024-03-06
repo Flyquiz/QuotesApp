@@ -13,7 +13,7 @@ struct Category {
 
 extension Category {
     static func makeModel() -> [Category] {
-        var stringArr = ["age",
+        let stringArr = ["age",
                      "alone",
                      "amazing",
                      "anger",
