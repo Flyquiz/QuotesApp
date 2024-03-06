@@ -15,6 +15,8 @@
 		AAD16A132B961FE5004EB653 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD16A122B961FE5004EB653 /* ViewController.swift */; };
 		AAD16A182B961FEC004EB653 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AAD16A172B961FEC004EB653 /* Assets.xcassets */; };
 		AAD16A1B2B961FEC004EB653 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AAD16A192B961FEC004EB653 /* LaunchScreen.storyboard */; };
+		AAF912702B98A29400C3FBEB /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF9126F2B98A29400C3FBEB /* NetworkManager.swift */; };
+		AAF912722B98A39200C3FBEB /* Quote.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF912712B98A39200C3FBEB /* Quote.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +30,8 @@
 		AAD16A172B961FEC004EB653 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AAD16A1A2B961FEC004EB653 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		AAD16A1C2B961FEC004EB653 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AAF9126F2B98A29400C3FBEB /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		AAF912712B98A39200C3FBEB /* Quote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Quote.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -44,6 +48,7 @@
 		AA87C58B2B9734B1005D89F9 /* App */ = {
 			isa = PBXGroup;
 			children = (
+				AAF9126E2B98A05400C3FBEB /* Networking */,
 				AA87C58E2B9744F1005D89F9 /* Extensions */,
 				AAD16A0E2B961FE5004EB653 /* AppDelegate.swift */,
 				AAD16A102B961FE5004EB653 /* SceneDelegate.swift */,
@@ -84,6 +89,7 @@
 			isa = PBXGroup;
 			children = (
 				AA87C5952B9745F1005D89F9 /* Category.swift */,
+				AAF912712B98A39200C3FBEB /* Quote.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -119,6 +125,14 @@
 				AA87C58C2B9734BC005D89F9 /* Resources */,
 			);
 			path = QuotesApp;
+			sourceTree = "<group>";
+		};
+		AAF9126E2B98A05400C3FBEB /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				AAF9126F2B98A29400C3FBEB /* NetworkManager.swift */,
+			);
+			path = Networking;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -194,6 +208,8 @@
 				AA87C5942B97455F005D89F9 /* TableViewCell.swift in Sources */,
 				AAD16A132B961FE5004EB653 /* ViewController.swift in Sources */,
 				AAD16A0F2B961FE5004EB653 /* AppDelegate.swift in Sources */,
+				AAF912702B98A29400C3FBEB /* NetworkManager.swift in Sources */,
+				AAF912722B98A39200C3FBEB /* Quote.swift in Sources */,
 				AAD16A112B961FE5004EB653 /* SceneDelegate.swift in Sources */,
 				AA87C5902B97450B005D89F9 /* UITableViewCell+Extension.swift in Sources */,
 				AA87C5962B9745F1005D89F9 /* Category.swift in Sources */,
