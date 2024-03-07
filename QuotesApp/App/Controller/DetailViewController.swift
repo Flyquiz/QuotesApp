@@ -62,7 +62,6 @@ final class DetailViewController: UIViewController {
         
         let inset: CGFloat = 20
         NSLayoutConstraint.activate([
-            //TODO: Fix numberOfLines
             quoteLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             quoteLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: inset),
             quoteLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -inset),

@@ -9,7 +9,7 @@ import Foundation
 
 typealias QuoteQuery = [Quote]
 
-struct Quote: Decodable {
+struct Quote: Codable {
     let quote: String
     let author: String
     let category: String

@@ -13,13 +13,6 @@ final class ViewController: UIViewController {
     
     private var tableModel: [Category] = []
     
-//    private lazy var searchController: UISearchController = {
-//        let searchVC = UISearchController()
-//        searchVC.delegate = self
-//        searchVC.searchBar.placeholder = "Get random quote from category bellow"
-//        return searchVC
-//    }()
-    
     private let mainLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -42,15 +35,22 @@ final class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         tableModel = Category.makeModel()
-        setup()
+        setupNavigationBar()
+        setupLayout()
     }
 
-    
-    private func setup() {
+    private func setupNavigationBar() {
         navigationItem.title = "QuotesApp"
+        let favoritesButton = UIBarButtonItem(image: UIImage(systemName: "star.fill"), 
+                                              style: .done,
+                                              target: self,
+                                              action: #selector(favoriteAction))
+        favoritesButton.tintColor = .systemYellow
+        navigationItem.rightBarButtonItem = favoritesButton
+    }
+    
+    private func setupLayout() {
         view.backgroundColor = .systemGray6
-//        navigationItem.searchController = searchController
-//        navigationItem.hidesSearchBarWhenScrolling = false
         view.addSubview(tableView)
         view.addSubview(mainLabel)
         
@@ -66,7 +66,10 @@ final class ViewController: UIViewController {
             mainLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -inset)
         ])
     }
-
+    
+    @objc private func favoriteAction() {
+        
+    }
 }
 
 
@@ -88,8 +91,6 @@ extension ViewController: UITableViewDataSource {
         content.text = tableModel[indexPath.row].name
         content.textProperties.color = .black
         cell.contentConfiguration = content
-        
-//        cell.isUserInteractionEnabled = false
         return cell
     }
 }
@@ -108,11 +109,3 @@ extension ViewController: UITableViewDelegate {
         }
     }
 }
-
-
-
-////MARK: - Search delegates
-//
-//extension ViewController: UISearchControllerDelegate, UISearchBarDelegate {
-//    
-//}
