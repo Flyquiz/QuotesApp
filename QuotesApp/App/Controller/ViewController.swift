@@ -68,7 +68,7 @@ final class ViewController: UIViewController {
     }
     
     @objc private func favoriteAction() {
-        
+        navigationController?.pushViewController(FavoritesViewController(), animated: true)
     }
 }
 

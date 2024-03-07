@@ -51,4 +51,8 @@ final class QuoteStore {
         favoritesArray.remove(at: index)
         encode()
     }
+    
+    public func getStorage() -> [Quote] {
+        favoritesArray
+    }
 }
