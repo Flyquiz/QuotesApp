@@ -15,7 +15,7 @@ final class DetailViewController: UIViewController {
         label.text = "quote"
         label.font = .systemFont(ofSize: 22, weight: .semibold)
         label.textAlignment = .center
-        label.numberOfLines = 5
+        label.numberOfLines = 0
         return label
     }()
     
@@ -66,7 +66,7 @@ final class DetailViewController: UIViewController {
             quoteLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             quoteLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: inset),
             quoteLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -inset),
-            quoteLabel.heightAnchor.constraint(equalToConstant: quoteLabel.intrinsicContentSize.height),
+            quoteLabel.topAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.topAnchor),
             
             authorLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             authorLabel.topAnchor.constraint(equalTo: quoteLabel.bottomAnchor, constant: 10),
