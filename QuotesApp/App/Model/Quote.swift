@@ -13,4 +13,13 @@ struct Quote: Codable {
     let quote: String
     let author: String
     let category: String
+    var isFavorite: Bool?
+}
+
+extension Quote: Equatable {
+    static func == (lhs: Quote, rhs: Quote) -> Bool {
+        lhs.quote == rhs.quote &&
+        lhs.author == rhs.author &&
+        lhs.category == rhs.category
+    }
 }

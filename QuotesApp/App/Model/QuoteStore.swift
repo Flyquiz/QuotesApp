@@ -47,8 +47,12 @@ final class QuoteStore {
         encode()
     }
     
-    public func delete(quote: Quote, index: Int) {
-        favoritesArray.remove(at: index)
+    public func delete(quote: Quote, index: Int?) {
+        if let index {
+            favoritesArray.remove(at: index)
+        } else {
+            favoritesArray.removeAll { quote == $0 }
+        }
         encode()
     }
     

@@ -15,6 +15,7 @@ final class CollectionViewCell: UICollectionViewCell {
         label.text = "Quote"
         label.font = .systemFont(ofSize: 20, weight: .semibold)
         label.textAlignment = .center
+        label.numberOfLines = 0
         return label
     }()
     
@@ -67,5 +68,10 @@ final class CollectionViewCell: UICollectionViewCell {
             categoryLabel.topAnchor.constraint(equalTo: quoteLabel.bottomAnchor, constant: inset),
             categoryLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -inset)
         ])
+        
+        guard let quote else { return }
+        quoteLabel.text = quote.quote
+        authorLabel.text = quote.author
+        categoryLabel.text = quote.category
     }
 }

@@ -30,6 +30,10 @@ final class FavoritesViewController: UIViewController {
         setupLayout()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        collectionView.reloadData()
+    }
+    
     
     private func setupLayout() {
         view.backgroundColor = .systemGray6
@@ -49,14 +53,13 @@ final class FavoritesViewController: UIViewController {
 //MARK: - collectionView dataSource/delegate
 extension FavoritesViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//        quoteStore.getStorage().count
-        6
+        quoteStore.getStorage().count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let quoteArr = quoteStore.getStorage()
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionViewCell.identifier, for: indexPath) as! CollectionViewCell
-        cell.setupCell(quote: nil)
+        cell.setupCell(quote: quoteArr[indexPath.item])
         return cell
     }
 }
@@ -75,5 +78,12 @@ extension FavoritesViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return inset
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        var destinationQuote = quoteStore.getStorage()[indexPath.item]
+        destinationQuote.isFavorite = true
+        let detailVC = DetailViewController(quote: destinationQuote)
+        navigationController?.pushViewController(detailVC, animated: true)
     }
 }

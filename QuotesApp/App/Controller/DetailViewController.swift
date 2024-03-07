@@ -9,6 +9,12 @@ import UIKit
 
 final class DetailViewController: UIViewController {
     
+    private let quoteStore = QuoteStore.shared
+    
+    private let currentQuote: Quote
+    
+    private var isFavorite: Bool
+    
     private let quoteLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -38,9 +44,11 @@ final class DetailViewController: UIViewController {
     }()
     
     init(quote: Quote) {
+        currentQuote = quote
         quoteLabel.text = quote.quote
         authorLabel.text = quote.author
         categoryLabel.text = quote.category
+        isFavorite = quote.isFavorite ?? false
         super.init(nibName: nil, bundle: nil)
     }
     @available(*, unavailable)
@@ -50,11 +58,31 @@ final class DetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setup()
+        setupNavigationBar()
+        setupLayout()
     }
     
     
-    private func setup() {
+    private func setupNavigationBar() {
+        let favoritesButton = UIBarButtonItem(image: nil,
+                                              style: .done,
+                                              target: self, 
+                                              action: #selector(favoriteAction))
+        if isFavorite {
+            favoritesButton.image = UIImage(systemName: "star.fill")
+            favoritesButton.tintColor = .systemYellow
+        } else {
+            favoritesButton.image = UIImage(systemName: "star")
+        }
+        
+        let refreshButton = UIBarButtonItem(image: UIImage(systemName: "arrow.clockwise"), 
+                                            style: .done,
+                                            target: self,
+                                            action: #selector(refreshAction))
+        navigationItem.rightBarButtonItems = [favoritesButton, refreshButton]
+    }
+    
+    private func setupLayout() {
         view.backgroundColor = .systemGray6
         [quoteLabel,
          authorLabel,
@@ -73,5 +101,29 @@ final class DetailViewController: UIViewController {
             categoryLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             categoryLabel.topAnchor.constraint(equalTo: authorLabel.bottomAnchor, constant: 40),
         ])
+    }
+    
+    @objc private func favoriteAction() {
+        guard let favoriteButton = navigationItem.rightBarButtonItems?[0] else { return }
+        let fillImage = UIImage(systemName: "star.fill")
+        switch isFavorite {
+            
+        case true:
+            quoteStore.delete(quote: currentQuote, index: nil)
+            let image = UIImage(systemName: "star")!
+            favoriteButton.setSymbolImage(image, contentTransition: .replace)
+            favoriteButton.tintColor = .systemBlue
+            isFavorite.toggle()
+        case false:
+            quoteStore.save(quote: currentQuote)
+            let image = UIImage(systemName: "star.fill")!
+            favoriteButton.setSymbolImage(image, contentTransition: .replace)
+            favoriteButton.tintColor = .systemYellow
+            isFavorite.toggle()
+        }
+    }
+    
+    @objc private func refreshAction() {
+        
     }
 }
