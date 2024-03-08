@@ -9,6 +9,8 @@ import UIKit
 
 final class DetailViewController: UIViewController {
     
+    private let networkManager = NetworkManager.shared
+    
     private let quoteStore = QuoteStore.shared
     
     private let currentQuote: Quote
@@ -46,9 +48,6 @@ final class DetailViewController: UIViewController {
     
     init(quote: Quote) {
         currentQuote = quote
-        quoteLabel.text = quote.quote
-        authorLabel.text = quote.author
-        categoryLabel.text = quote.category
         isFavorite = quote.isFavorite ?? false
         super.init(nibName: nil, bundle: nil)
     }
@@ -61,6 +60,7 @@ final class DetailViewController: UIViewController {
         super.viewDidLoad()
         setupNavigationBar()
         setupLayout()
+        setupData(quote: currentQuote)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -78,6 +78,12 @@ final class DetailViewController: UIViewController {
         }
     }
     
+    
+    private func setupData(quote: Quote) {
+        quoteLabel.text = quote.quote
+        authorLabel.text = quote.author
+        categoryLabel.text = quote.category
+    }
     
     private func setupNavigationBar() {
         let favoritesButton = UIBarButtonItem(image: nil,
@@ -139,6 +145,19 @@ final class DetailViewController: UIViewController {
     }
     
     @objc private func refreshAction() {
-        
+        let category = Category(name: currentQuote.category)
+        networkManager.fetchQuotes(for: category) { [weak self] result in
+            switch result {
+            case .success(let quote):
+                self?.setupData(quote: quote)
+                self?.isFavorite = false
+                guard let favoriteButton = self?.navigationItem.rightBarButtonItems?[0] else { return }
+                let image = UIImage(systemName: "star")!
+                favoriteButton.setSymbolImage(image, contentTransition: .replace)
+                favoriteButton.tintColor = .systemBlue
+            case .failure(let error):
+                print(error.title)
+            }
+        }
     }
 }
