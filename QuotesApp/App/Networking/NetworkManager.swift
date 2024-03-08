@@ -33,7 +33,6 @@ final class NetworkManager {
                 sendError(error: .dataTaskError)
                 return
             }
-            print(response.statusCode)
             
             switch response.statusCode {
             case 200...299:

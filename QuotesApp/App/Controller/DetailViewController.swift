@@ -43,6 +43,7 @@ final class DetailViewController: UIViewController {
         return label
     }()
     
+    
     init(quote: Quote) {
         currentQuote = quote
         quoteLabel.text = quote.quote
@@ -60,6 +61,21 @@ final class DetailViewController: UIViewController {
         super.viewDidLoad()
         setupNavigationBar()
         setupLayout()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        guard let parentVC = navigationController?.previousViewController,
+        let refreshButton = navigationItem.rightBarButtonItems?[1] else { return }
+
+        switch parentVC {
+        case is ViewController:
+            refreshButton.isHidden = false
+        case is FavoritesViewController:
+            refreshButton.isHidden = true
+        default:
+            break
+        }
     }
     
     
@@ -105,7 +121,6 @@ final class DetailViewController: UIViewController {
     
     @objc private func favoriteAction() {
         guard let favoriteButton = navigationItem.rightBarButtonItems?[0] else { return }
-        let fillImage = UIImage(systemName: "star.fill")
         switch isFavorite {
             
         case true:

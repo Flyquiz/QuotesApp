@@ -31,6 +31,7 @@ final class ViewController: UIViewController {
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: UITableViewCell.identifier)
         return tableView
     }()
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,6 +39,7 @@ final class ViewController: UIViewController {
         setupNavigationBar()
         setupLayout()
     }
+    
 
     private func setupNavigationBar() {
         navigationItem.title = "QuotesApp"
@@ -98,7 +100,9 @@ extension ViewController: UITableViewDataSource {
 extension ViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let category = tableModel[indexPath.row]
+        tableView.isUserInteractionEnabled = false
         networkManager.fetchQuotes(for: category) { [weak self] result in
+            tableView.isUserInteractionEnabled = true
             switch result {
             case .success(let quote):
                 let detailVC = DetailViewController(quote: quote)

@@ -20,24 +20,40 @@ final class FavoritesViewController: UIViewController {
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.register(CollectionViewCell.self, forCellWithReuseIdentifier: CollectionViewCell.identifier)
-        view.addSubview(collectionView)
+        collectionView.backgroundColor = .systemGray6
         return collectionView
+    }()
+    
+    private let warningLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "There are no favorite quotes here yet"
+        label.font = .systemFont(ofSize: 24, weight: .bold)
+        label.textAlignment = .center
+        label.numberOfLines = 2
+        return label
     }()
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupLayout()
+        view.backgroundColor = .systemGray6
+        navigationItem.title = "Favorites"
+        setupCollectionView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         collectionView.reloadData()
+        if quoteStore.getStorage().count != 0 {
+            setupCollectionView()
+        } else {
+            setupWarningLabel()
+        }
     }
     
     
-    private func setupLayout() {
-        view.backgroundColor = .systemGray6
-        navigationItem.title = "Favorites"
+    private func setupCollectionView() {
+        view.addSubview(collectionView)
         
         NSLayoutConstraint.activate([
             collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
@@ -45,6 +61,17 @@ final class FavoritesViewController: UIViewController {
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
+        warningLabel.removeFromSuperview()
+    }
+    
+    private func setupWarningLabel() {
+        view.addSubview(warningLabel)
+        NSLayoutConstraint.activate([
+            warningLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 40),
+            warningLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            warningLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+        ])
+        collectionView.removeFromSuperview()
     }
 }
 
